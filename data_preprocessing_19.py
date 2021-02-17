@@ -1,46 +1,27 @@
 import json
 import os
-from SplitIntoSentences import split_into_sentences
 import numpy
 def breaker(all_para,switches,X):
-    char_count = 0
+    char_count = -1
     switch = 0
     y_changes_temp = []
     for text in all_para:
         char_count += 1
         words = text.split(' ')
         if(len(words) >= 10):
-            sentences = split_into_sentences(text)
-            # sentences = []
-            # for sentence in re.split('(?<=[.!?])', text):
-            #     if(len(sentence.split(' '))>0):
-            #         sentences.append(sentence)
-            for i in range(0, len(sentences), 3):
-                str = ""
-                if i + 5 < len(sentences):
-                    for j in range(i, i+3):
-                        str += sentences[j]
-                else:
-                    for j in range(i, len(sentences)):
-                        str += sentences[j]
+            new_author = 0
+            X.append(text)
 
-                X.append(str)
-                new_author_count = 0
+            while (switch < len(switches) and switches[switch] <= char_count + len(text)):
+                new_author = 1
+                switch += 1
 
-                while (switch < len(switches) and switches[switch] <= char_count+len(str)):
-                    new_author_count += 1
-                    switch += 1
+            if (new_author != 0):
+                y_changes_temp.append(1)
+            else:
+                y_changes_temp.append(0)
 
-                if(new_author_count != 0):
-                    y_changes_temp.append(1)
-                else:
-                    y_changes_temp.append(0)
-
-                char_count += len(str)
-                if(i+5 >= len(sentences)):
-                    break
-        else:
-            char_count += len(text)
+        char_count += len(text)
 
     y_changes_temp.pop(0)
     return y_changes_temp
@@ -54,6 +35,7 @@ def process(dir_name,type = "train"):
             try:
                 f = open(path+file, "r", encoding='utf-8')
                 doc = f.read()
+
                 all_para = doc.split("\n")
 
                 f_truth = open(dir_name + file[:-3] + "truth")
