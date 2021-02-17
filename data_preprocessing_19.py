@@ -41,7 +41,6 @@ def process(dir_name,type = "train"):
 
                 authors = numpy.unique(numpy.array(doc["structure"]))
                 y_mult.append(len(authors))
-                break
             except:
                 print("Ground truth not found for : ", file)
 
@@ -51,5 +50,5 @@ def process(dir_name,type = "train"):
     print(y_changes[0])
     return (X,y_mult,y_changes)
 
-path = "./Pan_19/train/"
+path = "C:/Users/Ashish/Desktop/MTL782/Pan_19/train/"
 process(path,"train")
