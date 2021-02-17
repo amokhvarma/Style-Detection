@@ -1,21 +1,43 @@
 import json
 import os
+from SplitIntoSentences import split_into_sentences
 import numpy
 def breaker(all_para,switches,X):
-    char_count = -1
+    char_count = 0
     switch = 0
     y_changes_temp = []
     for text in all_para:
         char_count += 1
         words = text.split(' ')
         if(len(words) >= 10):
-            new_author = 0
-            X.append(text)
-            while (switch < len(switches) and switches[switch] <= char_count + len(text)):
-                new_author = 1
-                switch += 1
-            y_changes_temp.append(new_author)
-        char_count += len(text)
+            sentences = split_into_sentences(text)
+            # sentences = []
+            # for sentence in re.split('(?<=[.!?])', text):
+            #     if(len(sentence.split(' '))>0):
+            #         sentences.append(sentence)
+            for i in range(0, len(sentences), 3):
+                str = ""
+                if i + 5 < len(sentences):
+                    for j in range(i, i+3):
+                        str += sentences[j]
+                else:
+                    for j in range(i, len(sentences)):
+                        str += sentences[j]
+
+                X.append(str)
+                new_author = 0
+
+                while (switch < len(switches) and switches[switch] <= char_count+len(str)):
+                    new_author = 1
+                    switch += 1
+
+                y_changes_temp.append(new_author)
+
+                char_count += len(str)
+                if(i+5 >= len(sentences)):
+                    break
+        else:
+            char_count += len(text)
 
     return y_changes_temp[1:len(y_changes_temp)]
 
