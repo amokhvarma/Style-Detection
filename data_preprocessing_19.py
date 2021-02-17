@@ -50,5 +50,5 @@ def process(dir_name,type = "train"):
     print(y_changes[0])
     return (X,y_mult,y_changes)
 
-path = "C:/Users/Ashish/Desktop/MTL782/Pan_19/train/"
+path = "./Pan_19/train/"
 process(path,"train")
