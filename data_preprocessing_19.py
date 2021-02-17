@@ -14,10 +14,7 @@ def breaker(all_para,switches,X):
             while (switch < len(switches) and switches[switch] <= char_count + len(text)):
                 new_author = 1
                 switch += 1
-            if (new_author != 0):
-                y_changes_temp.append(1)
-            else:
-                y_changes_temp.append(0)
+            y_changes_temp.append(new_author)
         char_count += len(text)
 
     return y_changes_temp[1:len(y_changes_temp)]
