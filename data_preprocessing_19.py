@@ -11,20 +11,16 @@ def breaker(all_para,switches,X):
         if(len(words) >= 10):
             new_author = 0
             X.append(text)
-
             while (switch < len(switches) and switches[switch] <= char_count + len(text)):
                 new_author = 1
                 switch += 1
-
             if (new_author != 0):
                 y_changes_temp.append(1)
             else:
                 y_changes_temp.append(0)
-
         char_count += len(text)
 
-    y_changes_temp.pop(0)
-    return y_changes_temp
+    return y_changes_temp[1:len(y_changes_temp)]
 
 
 def process(dir_name,type = "train"):
@@ -35,7 +31,6 @@ def process(dir_name,type = "train"):
             try:
                 f = open(path+file, "r", encoding='utf-8')
                 doc = f.read()
-
                 all_para = doc.split("\n")
 
                 f_truth = open(dir_name + file[:-3] + "truth")
@@ -46,6 +41,7 @@ def process(dir_name,type = "train"):
 
                 authors = numpy.unique(numpy.array(doc["structure"]))
                 y_mult.append(len(authors))
+                break
             except:
                 print("Ground truth not found for : ", file)
 
