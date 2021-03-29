@@ -56,10 +56,11 @@ def process(dir_name,type = "train"):
                 doc = json.load(f_truth)
 
                 switches = [int(x) for x in doc["switches"]]
-                y_changes.extend(breaker(all_para, switches, X))
+                y_changes.append(breaker(all_para, switches, X))
 
                 authors = numpy.unique(numpy.array(doc["structure"]))
                 y_mult.append(len(authors))
+                break
             except:
                 print("Ground truth not found for : ", file)
 
@@ -69,5 +70,5 @@ def process(dir_name,type = "train"):
     print(y_changes[0])
     return (X,y_mult,y_changes)
 
-path = "./Pan_19/train/"
+path = "./pan19_train/"
 process(path,"train")

@@ -1,4 +1,5 @@
 import json
+from sentence_split import split_into_sentences
 import os
 def read_input(dir_name,type = "train"):
     X,y_mult,y_changes = [],[],[]
@@ -8,6 +9,7 @@ def read_input(dir_name,type = "train"):
 
             f = open(dir_name+file,"r")
             doc = f.read()
+
             para = doc.split("\n\n")
             # para = embed(para)
             X.append(para)
@@ -29,3 +31,5 @@ def read_input(dir_name,type = "train"):
 
 path = "./train/dataset-wide/"
 (X,y1,y2) = read_input(path,"train")
+print(senten)
+# X
