@@ -25,11 +25,13 @@ def process(all_para,changes,X,y,temp):
     y.extend(changes)
     y.append(1)
     result = []
+
     for text in all_para:
         sentences = split_into_sentences(text)
         se = s_model.encode(sentences)
         k = sum(se)/len(se)
         result.append(k)
+
     if (len(temp) != 0):
         X.append(diff(result[0], temp[len(temp)-1]))
     for i in range(1,len(result)):
